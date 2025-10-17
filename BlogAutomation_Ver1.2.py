@@ -4,8 +4,8 @@ import random
 
 ##########사용자 설정 변수##########
 # ID & Passwords
-id :str = "Put ID Here"
-pw :str = "Put Password Here"
+id :str = ""
+pw :str = ""
 
 # Maximum Posts Number to visit
 postNum = 50
