@@ -4,8 +4,8 @@ import random
 
 ##########사용자 설정 변수##########
 # ID & Passwords
-id :str = ""
-pw :str = ""
+id :str = "pan_pp"
+pw :str = "hermetica0912!"
 
 # Maximum Posts Number to visit
 postNum = 50

@@ -1,8 +1,10 @@
+# path: SeleniumModules.py
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager  # ★ 추가
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import pyperclip as pp
 import time
 import random
@@ -10,42 +12,36 @@ import os
 from datetime import datetime
 
 
-# Path for Chrome Driver
-driverFolder : str= os.getcwd()+'/selenium/chromedriver.exe'
-service = Service(driverFolder)
+# === Config ===
+clickedLikeNum: int = 0
+stopTagNum: int = 0
 
-# Number of Liked Post & Ceased Posts
-clickedLikeNum : int = 0
-stopTagNum = 0
+defaultDelayMin: float = 1.0
+defaultDelayMax: float = 2.0
+ScrollDelayMin: float = 0.5
+ScrollDelayMax: float = 1.0
+keyInputDelayMin: float = 0.5
+keyInputDelayMax: float = 1.0
+likeminPauseTime: float = 0.5
+likemaxPauseTime: float = 1.0
+longDelayforTest: float = 5.0
 
-# Delay
-## Default Delay
-defaultDelayMin : float = 1.0
-defaultDelayMax : float = 2.0
-## Delay for Scroll while searching posts
-ScrollDelayMin : float = 0.5
-ScrollDelayMax : float = 1.0
-## Delay for Key Input
-keyInputDelayMin : float = 0.5
-keyInputDelayMax : float = 1.0
-## Delay for Scroll while READING Post
-likeminPauseTime : float = 0.5
-likemaxPauseTime : float = 1.0
-## Long Term Delay for Test
-longDelayforTest : float = 5.0
+# === Chrome options ===
 
+options = Options()
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-gpu")
+options.add_argument("window-size=1920x1080")
+options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36")
 
-options = webdriver.ChromeOptions()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-options.add_argument('--no-sandbox')
-options.add_argument("disable-gpu")
+# ✅ ChromeDriverManager().install()이 경로 문자열을 반환하도록 명시
+driver_path = ChromeDriverManager().install()
+print("ChromeDriver installed at:", driver_path)
 
-options.add_argument('window-size=1920x1080')
-options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
-
-service = Service(ChromeDriverManager().install())
-
+service = Service(executable_path=driver_path)
 driver = webdriver.Chrome(service=service, options=options)
+
 
 def login(yourid, yourpassword):
     # 최신 PC 로그인 페이지로 변경
